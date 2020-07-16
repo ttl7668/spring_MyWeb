@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 속성에 참조할 인터페이스 위치를 정확하게 기술 -->
+
+<mapper namespace="com.team404.test.mapper.TestMapper">
+
+<!-- id 속성에는 참조한 인터페이스의 추상메서드 이름, resultType은 sql문의 실행결과를 반환할 타입 -->
+
+	<select resultType="String" id="getTime">
+	select sysdate from dual 
+	</select>
+
+</mapper>
