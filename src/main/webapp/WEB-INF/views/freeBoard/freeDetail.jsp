@@ -101,6 +101,7 @@
                         </div> -->
                         
                         </div>
+                        <button class="form-control" id="moreList">더보기(페이징)</button>
                     </div>
                 </div>
             </div>
@@ -143,7 +144,7 @@
         			 			$("#reply").val("");
         			 			$("#replyId").val("");
         			 			$("#replyPw").val("");
-        			 			getList(); //목록메서드
+        			 			getList(1,true); //목록메서드
         			 			
         			 		}else{
         			 			alert("등록에 실패햇습니다. 잠시후 다시 시도하세요")
@@ -157,22 +158,47 @@
         			
         		} //add함수 끝
         		
-        		//목록 요청
-        		getList(); //상세화면 진입시에 리스트 목록을 가져옴
+        		//더보기 버튼처리(클릭시 전역변수 페이지번호에 +1 값을 전달)
+        		$("#moreList").click(function(){
+        			
+        			getList(++page,false);
+        			
+        		})
         		
-        		function getList(){
+        		//목록 요청
+        		var page = 1; //페이지번호
+        		var strAdd=""; //화면에 그려넣을 태그를 문자열의 형태로 추가할 변수
+        		
+        		getList(1,true); //상세화면 진입시에 리스트 목록을 가져옴
+        		function getList(pageNum,reset){//매개변수로 페이지번호,화면리셋여부
+        			
         			var bno = "${boardVO.bno }";//게시글 번호
         			
         			$.getJSON(
-        					"../reply/getList/" + bno,
+        					"../reply/getList/" + bno+"/"+pageNum,
         					function(data){
         				 	console.log(data);
+        				 	
+        				 	var total = data.total;//댓글의 총게시글 수 
+        				 	var data = data.list; //댓글 리스트
+        				 	
+        				 	if(page*20>=total){//페이지번호 * 데이터수가 전체게시글 개수보다 크면 더보기를 삭제
+        				 		$("#moreList").css("display","none");
+        				 		
+        				 	}else{
+        				 		$("#moreList").css("display","block");
+        				 	}
+        				 	
+        				 	if(reset==true){ //insert,delete,update 다음에는 댓글을 누적하고 있는 strAdd변수를 초기화
+        				 		strAdd ="";
+        						page = 1;
+        				 	}
         				 	
         				 	if(data.length<=0){//응답 데이터의 길이가 0보다 같거나 작으면 함수 종료
         				 		return; //함수종료
         				 	}
         				 	
-        				 	var strAdd = "";//화면에 그려넣을 태그를 문자열의 형태로 추가할 변수 
+        				 	//var strAdd = "";//화면에 그려넣을 태그를 문자열의 형태로 추가할 변수 
         				 	for(var i = 0; i<data.length;i++){
         				 		strAdd += "<div class='reply-wrap' style='display:none;'>";
         				 		strAdd += "<div class='reply-image'>";
@@ -181,7 +207,7 @@
         				 		strAdd += "<div class='reply-content'>";
         				 		strAdd += "<div class='reply-group'>";
         				 		strAdd += "<strong class='left'>"+data[i].replyId+"</strong>";
-        				 		strAdd += "<small class='left'>"+timeStamp(data[i].replyDate)+"</small>";
+        				 		strAdd += "<small class='left'>"+timeStamp(data[i].replyDate)+"</small>" ;
         				 		strAdd += "<a href='"+data[i].rno+"' class='right replyModify'><span class='glyphicon glyphicon-pencil'></span>수정</a>";
         				 		strAdd += "<a href='"+data[i].rno+"' class='right replyDelete'><span class='glyphicon glyphicon-remove'></span>삭제</a>";
         				 		strAdd += "</div>";
@@ -246,24 +272,32 @@
         			5.업데이트가 진행된 다음에는 modal장의 값을 공백으로 초기화 시키세요.
         			*/
         			var rno =$("#modalRno").val();
-        			var modalReply = $("#modalReply").val();
-        			var modalPw = $("#modalPw").val();
-        			console.log(modalReply)
+        			var reply = $("#modalReply").val();
+        			var replyPw = $("#modalPw").val();
+        		        			
+        			if(reply===""||rno===""||replyPw===""){
+        				alert("내용,비번을 확인하세요");
+        				return;
+        			}
         			
         			$.ajax({
         				type:"POST", //요청방식
         				url:"../reply/update",
-        				data:JSON.stringify({"rno":rno,"reply":modalReply,"replyPw":modalPw}), //문자열의 형태로 변경해서 요청
+        				data:JSON.stringify({"rno":rno,"reply":reply,"replyPw":replyPw}), //문자열의 형태로 변경해서 요청
         				dataType:"text", //서버로 부터 어떤형식으로 받을건지
         				contentType:"application/json; charset=utf-8", //기본값은 폼형식을 지정하는데 제이슨 형식으로 보낼때는 반드시 타입을 명시해야함 
         			 	success:function(data){ //요청성공시 돌려받을 콜백함수
-       
+       						console.log(data)
         			 		if(data==1){	//등록성공
-        			 	
-        			 		
-        			 			
+        			 			alert("수정 성공")
+        			 			$("#modalReply").val(""); //수정창 비우기
+        			 			$("#modalPw").val(""); //비번창 비우기
+        			 			$("#replyModal").modal("hide"); //모달창 닫기
+        			 			getList(1,true);
+        			 		        			 			
         			 		}else{
-        			 			alert("수정에 실패햇습니다. 잠시후 다시 시도하세요")
+        			 			alert("비밀번호확인하세요");
+        			 			$("#modalPw").val("");
         			 		}
         			 	},
         			 	error :function(status,error){ //에러 발생시 실행시킬 콜백함수
@@ -274,13 +308,44 @@
         		})
         		
         		//삭제함수
-        		$("modalDelBtn").click(function(){
+        		$("#modalDelBtn").click(function(){
         			/*
         			1.모달창에 rno값, replyPw값을 얻습니다.
         			2.ajax 함수를 이용해서 post방식으로 reply/delete 요청, 필요한값은 JSON형식으로 처리해서 요청
         			3.서버에서는 요청을 받아서 비밀번호를 확인하고 비밀번호가 맞다면 삭제를 진행.
         			4.만약 비밀번호가 틀렷다면 0을 반환해서 비밀번호가 틀렷습니다. 경고창을 띄우세요.
         			*/
+        			var rno =$("#modalRno").val();
+        			var replyPw = $("#modalPw").val();
+        			
+        			if(replyPw==""){
+        				alert("비번을 확인하세요")
+        			}
+        			
+        			$.ajax({
+        				type:"POST",
+        				url:"../reply/delete",
+        				data:JSON.stringify({"rno":rno,"replyPw":replyPw}),
+        				dataType:"text",
+        				contentType:"application/json; charset=utf-8",
+        				success:function(data){
+        					console.log(data)
+        					if(data==1){
+        						alert("삭제 성공")
+        						$("#modalPw").val("");
+        						$("#replyModal").modal("hide");
+        						getList(1,true);
+        						
+        					}else{
+        						alert("비번이 틀렸습니다.")
+        						$("#modalPw").val("");
+        					}
+        				},
+        				error:function(status,error){
+        					alert("삭제 실패")
+        				}
+        			})
+        			
         		})
         
         		//날짜처리 함수
@@ -308,7 +373,7 @@
         				var minute = today.getMinutes();
         				var second = today.getSeconds();
         				
-        				time = year+"년"+month+"월"+day+"일"+hour+":"+minute+":"+second+":";
+        				time = year+"년"+month+"월"+day+"일"+hour+":"+minute+":"+second;
         			}
         			
         			return time;
@@ -319,7 +384,8 @@
         </script>
         
       
-    <button data-target="#replyModal" data-toggle="modal">확인</button>   
+       
+    
 	<!-- 모달 -->
 	<div class="modal fade" id="replyModal" role="dialog">
 		<div class="modal-dialog modal-md">

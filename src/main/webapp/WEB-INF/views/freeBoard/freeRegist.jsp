@@ -47,12 +47,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    </form>
                     
                     <div class="titlefoot">
                         <button class="btn" id="registBtn">등록</button>
-                        <button class="btn" onclick="location.href='freeList'">목록</button>
+                        <button class="btn" id="listBtn">목록</button>
                     </div>
-                    </form>
                 </div>
             </div>    
        </div>
@@ -79,6 +79,12 @@
     		}else{
     			document.registForm.submit();
     		}
+    	}
+    	
+    	var listBtn = document.getElementById("listBtn");
+    	listBtn.onclick =function(){
+    		
+    		location.href="freeList";
     	}
     </script>
     

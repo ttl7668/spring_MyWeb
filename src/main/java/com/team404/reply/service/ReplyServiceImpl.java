@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team404.command.ReplyVO;
 import com.team404.reply.mapper.ReplyMapper;
+import com.tema404.util.Criteria;
 
 @Service("replyService")
 public class ReplyServiceImpl implements ReplyService{
@@ -21,16 +22,40 @@ public class ReplyServiceImpl implements ReplyService{
 		
 	}
 
+	/*
+	 * @Override public ArrayList<ReplyVO> getList(int bno) {
+	 * 
+	 * return replyMapper.getList(bno); }
+	 */
+	
 	@Override
-	public ArrayList<ReplyVO> getList(int bno) {
+	public ArrayList<ReplyVO> getList(Criteria cri, int bno) {
 		
-		return replyMapper.getList(bno);
+		return replyMapper.getList(cri,bno);
 	}
 
 	@Override
 	public int update(ReplyVO vo) {
-		replyMapper.update(vo);
-		return 1;
+		
+		return replyMapper.update(vo);
+	}
+
+	@Override
+	public int pwCheck(ReplyVO vo) {
+
+		return replyMapper.pwCheck(vo);
+	}
+
+	@Override
+	public int delete(ReplyVO vo) {
+		
+		return replyMapper.delete(vo);
+	}
+
+	@Override
+	public int getTotal(int bno) {
+		
+		return replyMapper.getTotal(bno);
 	}
 
 }

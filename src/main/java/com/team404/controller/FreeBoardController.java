@@ -47,8 +47,6 @@ public class FreeBoardController {
 		PageVO pageVO = new PageVO(cri,total);
 				
 		//System.out.println(cri.toString());
-		System.out.println(list.toString());
-		System.out.println(total);
 		
 		model.addAttribute("boardList",list);
 		model.addAttribute("pageVO",pageVO);

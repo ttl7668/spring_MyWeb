@@ -11,11 +11,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id ="getList" resultType="ReplyVO">
-		select *from FREEREPLY where bno = #{bno} order by rno desc
+		<!-- select *from FREEREPLY where bno = #{bno} order by rno desc -->
+		<![CDATA[
+		select *from(
+					select rownum as rn,
+					                rno,
+					                bno,
+					                reply,
+					                replyId,
+					                replyPw,
+					                replyDate,
+					                updateDate
+					from(
+					    select*
+					    from freereply 
+					    where bno=#{bno}
+					    order by 
+					    rno desc
+					        )
+		)where rn > (#{cri.pageNum}-1) * #{cri.amount} 
+		and rn <= #{cri.pageNum} * #{cri.amount}
+		 ]]> 
 	</select>
 	
+	<select id="getTotal" resultType="int">
+		select count(*) as total from freereply where bno = #{bno}
+	
+	</select>
+	
+	
 	<update id="update">
-		update FREEREPLY set reply=#{reply}
+		update FREEREPLY set reply=#{reply}, updateDate = sysdate
 		where rno=#{rno}
 	</update>
+	
+	<select id ="pwCheck" resultType="int">
+		select count(*) as result
+		from freereply where rno = #{rno} and replypw=#{replyPw}
+	</select>
+	
+	<delete id="delete">
+		delete from freereply where rno=#{rno}
+	</delete>
+	
 </mapper>
