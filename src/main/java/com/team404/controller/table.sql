@@ -9,13 +9,30 @@ create table freeboard(
  alter table freeboard add CONSTRAINT freeboard_pk PRIMARY KEY (bno);
  
  create table freereply (
-    rno number(10,0),--´ñ±Û¹øÈ£
-    bno number(10,0),--±Û¹øÈ£
-    reply varchar2(1000),--³»¿ë
-    replyId varchar2(50),--±Û¾´ÀÌ
-    replyPw varchar2(50),--ºñ¹Ð¹øÈ£
-    replydate date default sysdate,--µî·ÏÀÏ
-    updatedate date default sysdate--¼öÁ¤ÀÏ
+    rno number(10,0),--ï¿½ï¿½Û¹ï¿½È£
+    bno number(10,0),--ï¿½Û¹ï¿½È£
+    reply varchar2(1000),--ï¿½ï¿½ï¿½ï¿½
+    replyId varchar2(50),--ï¿½Û¾ï¿½ï¿½ï¿½
+    replyPw varchar2(50),--ï¿½ï¿½Ð¹ï¿½È£
+    replydate date default sysdate,--ï¿½ï¿½ï¿½ï¿½ï¿½
+    updatedate date default sysdate--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 );
 create SEQUENCE freereply_seq;
 alter table freereply add CONSTRAINT freereply_pk PRIMARY KEY (rno);
+
+create table users(
+    userId VARCHAR2(50) not null,
+    userPw VARCHAR2(50) not null,
+    userName VARCHAR2(50) not null,
+    userPhone1 VARCHAR2(50) not null,
+    userPhone2 VARCHAR2(50) not null,
+    userEmail1 VARCHAR2(50) not null,
+    userEmail2 VARCHAR2(50) not null,
+    addrZipNum VARCHAR2(50) not null,
+    addrBasic VARCHAR2(50) not null,
+    addrDetail VARCHAR2(50) not null,
+    regdate date DEFAULT sysdate
+    
+    );
+
+alter table users add CONSTRAINT users_pk PRIMARY key (userId);

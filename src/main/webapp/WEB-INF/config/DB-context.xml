@@ -36,8 +36,6 @@
 	</bean>
 	
 	<!-- 마이바티스 인터페이스을 자동으로 읽어서 bean으로 생성 -->
-	<mybatis-spring:scan base-package="com.team404.test.mapper"/>
-
 	<mybatis-spring:scan base-package="com.team404.*"/>
 	
 </beans>

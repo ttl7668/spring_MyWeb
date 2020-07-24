@@ -26,18 +26,18 @@
                     <div class="titlebox">
                         로그인
                     </div>
-                    <form>
+                    <form action="loginForm" name="loginForm" method="post">
                         <div class="form-group"><!--사용자클래스선언-->
                             <label for="id">아이디</label>
-                            <input type="text" class="form-control" id="id" placeholder="아이디">
+                            <input type="text" class="form-control" name="userId" id="userId" placeholder="아이디">
                          </div>
                          <div class="form-group"><!--사용자클래스선언-->
                             <label for="id">비밀번호</label>
-                            <input type="password" class="form-control" id="id" placeholder="비밀번호">
+                            <input type="password" class="form-control" name="userPw" id="userPw" placeholder="비밀번호">
                          </div>
                          <div class="form-group">
-                            <button type="button" class="btn btn-info btn-block">로그인</button>
-                            <button type="button" class="btn btn-primary btn-block">회원가입</button>
+                            <button type="button" class="btn btn-info btn-block" id="loginBtn">로그인</button>
+                            <button type="button" class="btn btn-primary btn-block" id="joinBtn">회원가입</button>
                          </div>
                     </form>                
                 </div>
@@ -46,5 +46,34 @@
     </section>
     <%@ include file="../include/footer.jsp" %>
 
+	<script>
+	
+	$("#loginBtn").click(function(){
+		
+		 if($("#userId").val() == ''){
+				alert("아이디입력하시오 ");
+				$("#userId").focus();
+			return;
+			 }else if($("#userPw").val() == ''){
+					alert("비번입력하시오");
+					$("#userPw").focus();
+				return;
+			 }else{
+				 document.loginForm.submit();
+				 alert(msg)
+			 }
+	})
+ 	
+	
+	
+	$("#joinBtn").click(function(){
+			
+		location.href="userJoin";
+	})
+	
+	
+					
+		
+	</script>
 </body>
 </html>
