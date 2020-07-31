@@ -14,8 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team404.command.FreeBoardVO;
 import com.team404.freeboard.service.FreeBoardService;
-import com.tema404.util.Criteria;
-import com.tema404.util.PageVO;
+import com.team404.util.Criteria;
+import com.team404.util.PageVO;
 
 @Controller
 @RequestMapping("/freeBoard")

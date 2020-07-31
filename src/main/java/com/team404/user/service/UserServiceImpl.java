@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int idCheck(UserVO vo) {
-		
+		System.out.println("수행됨");
 		return userMapper.idCheck(vo);
 	}
 
@@ -28,6 +28,12 @@ public class UserServiceImpl implements UserService{
 	public int login(UserVO vo) {
 		
 		return userMapper.login(vo);
+	}
+
+	@Override
+	public UserVO userInfo(String userId) {
+		
+		return userMapper.userInfo(userId);
 	}
 
 }

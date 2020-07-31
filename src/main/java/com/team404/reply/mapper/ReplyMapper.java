@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import com.team404.command.ReplyVO;
-import com.tema404.util.Criteria;
+import com.team404.util.Criteria;
 
 public interface ReplyMapper {
 	

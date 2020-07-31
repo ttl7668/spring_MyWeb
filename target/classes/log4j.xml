@@ -10,6 +10,11 @@
 		</layout>
 	</appender>
 	
+	<!-- 사용자로그 추가 -->
+	<logger name="com.team404.util.aop">
+		<level value="info"/>
+	</logger>
+	
 	<!-- Application Loggers -->
 	<logger name="com.team404.myweb">
 		<level value="info" />

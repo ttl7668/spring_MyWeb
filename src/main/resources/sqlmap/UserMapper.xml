@@ -17,5 +17,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultType="int">
 		select count(*) as total from users where userId = #{userId} and userPw = #{userPw}
 	</select>
+	
+	<!-- 1:다 관계 조인처리할때 retulMap태그를 이용할 수 잇습니다 -->
+	<!-- type에는 맵핑클래스의 경로 id는 고유 식별값 -->
+	<resultMap type="UserVO" id="boardList">
+		<result column = "userid" property ="userId"/>
+		<result column = "userpw" property ="userPw"/>
+		<result column = "username" property ="userId"/>
+		<result column = "userId" property ="userId"/>
+		<result column = "userphone1" property ="userPhone1"/>
+		<result column = "userphone2" property ="userPhone2"/>
+		<result column = "useremail1" property ="userEmail1"/>
+		<result column = "useremail2" property ="userEmail2"/>
+		<result column = "addrzipnum" property ="addrZipNum"/>
+		<result column = "addrbasic" property ="addrBasic"/>
+		<result column = "addrdetail" property ="addrDetail"/>
+		<collection resultMap="list" property="userBoardList"/>
+	</resultMap>
+	<resultMap type="freeBoardVO" id="list">
+		<result column = "bno" property ="bno"/>
+		<result column = "title" property ="title"/>
+		<result column = "regdate" property ="regdate"/>
+		
+	</resultMap>
+	<select id="userInfo" resultMap="boardList"><!-- resultType="1:1매핑일때" -->
+			select 
+			    userid,
+			    userpw,
+			    username,
+			    userphone1,
+			    userphone2,
+			    useremail1,
+			    useremail2,
+			    addrzipnum,
+			    addrbasic,
+			    addrdetail,
+			    f.bno,
+			    f.title,
+			    f.regdate
+			from users u
+			left outer join freeBoard f
+			on u.userid = f.writer
+			where userid = #{userId}
+	</select>
 
 </mapper>

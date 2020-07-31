@@ -7,4 +7,5 @@ public interface UserMapper {
 	public int idCheck(UserVO vo);
 	public int insert(UserVO vo);
 	public int login(UserVO vo);
+	public UserVO userInfo(String userId);//회원정보
 }

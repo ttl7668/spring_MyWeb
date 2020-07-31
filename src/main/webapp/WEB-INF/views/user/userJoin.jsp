@@ -144,7 +144,7 @@
         pwConfirm.onkeyup = function() {
             var regex = /^[A-Za-z0-9+]{8,16}$/;
             if(document.getElementById("pwConfirm").value == document.getElementById("userPw").value ) {
-                document.getElementById("pwConfirm").style.borderColor = "green";
+            	pwConfirm.style.borderColor = "green";
                 document.getElementById("msgPw-c").innerHTML = "비밀번호가 일치합니다";
             } else {
                 document.getElementById("pwConfirm").style.borderColor = "red";

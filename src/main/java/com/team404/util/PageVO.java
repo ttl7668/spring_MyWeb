@@ -1,4 +1,4 @@
-package com.tema404.util;
+package com.team404.util;
 
 import lombok.Data;
 

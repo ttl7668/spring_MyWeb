@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team404.command.ReplyVO;
 import com.team404.reply.service.ReplyService;
-import com.tema404.util.Criteria;
+import com.team404.util.Criteria;
 
 @RestController //비동기전용 댓글 컨트롤러
 @RequestMapping("/reply")

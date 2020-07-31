@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team404.command.FreeBoardVO;
 import com.team404.freeboard.mapper.FreeBoardMapper;
-import com.tema404.util.Criteria;
+import com.team404.util.Criteria;
 
 
 @Service("freeBoardService")

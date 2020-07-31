@@ -15,7 +15,6 @@
     <link href="${pageContext.request.contextPath }/resources/css/style.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath }/resources/js/bootstrap.js"></script>
 	
-
 </head>
 <body>
 	
@@ -29,7 +28,7 @@
                             <p>상세보기</p>
                         </div>
                         
-                        <form action="freeModify" method="post">
+                        <form action="freeModify" name="detailForm" method="post">
                             <div>
                                 <label>DATE</label>
                                 <p><fmt:formatDate value="${boardVO.regdate }" pattern="yyyy-MM-dd"/></p>
@@ -232,7 +231,7 @@
         		반드시 써야 합니다.(비동기는 순서를 기다리지 않음)
         		*/
         		
-        		$("#replyList").on("click","a",function(){
+        		/* $("#replyList").on("click","a",function(){
         			//1. 수정버튼인지 삭제인지 확인
         			//제이쿼리 this는 자바스크립트 event.target코드와 비슷합니다.
         			event.preventDefault();
@@ -261,7 +260,7 @@
         			
         
         		})
-        		
+        		 */
         		//수정함수
         		$("#modalModBtn").click(function(){
         			/*
@@ -383,9 +382,7 @@
         	
         </script>
         
-      
-       
-    
+    <button type="button" data-toggle="modal" data-target="#replyModal">확인</button>        
 	<!-- 모달 -->
 	<div class="modal fade" id="replyModal" role="dialog">
 		<div class="modal-dialog modal-md">

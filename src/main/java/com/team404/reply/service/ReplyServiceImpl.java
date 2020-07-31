@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.team404.command.ReplyVO;
 import com.team404.reply.mapper.ReplyMapper;
-import com.tema404.util.Criteria;
+import com.team404.util.Criteria;
 
 @Service("replyService")
 public class ReplyServiceImpl implements ReplyService{

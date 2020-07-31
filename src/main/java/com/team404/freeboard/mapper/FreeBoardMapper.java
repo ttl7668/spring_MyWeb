@@ -3,7 +3,7 @@ package com.team404.freeboard.mapper;
 import java.util.ArrayList;
 
 import com.team404.command.FreeBoardVO;
-import com.tema404.util.Criteria;
+import com.team404.util.Criteria;
 
 public interface FreeBoardMapper {
 	

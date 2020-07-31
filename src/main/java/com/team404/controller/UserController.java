@@ -1,8 +1,11 @@
 package com.team404.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,24 +60,41 @@ public class UserController {
 	
 	//로긴폼으로 이동 
 	@RequestMapping(value="/loginForm",method=RequestMethod.POST)
-	public String loginForm(UserVO vo,RedirectAttributes RA) {
+	public String loginForm(UserVO vo,HttpSession session,RedirectAttributes RA) {
 		System.out.println(vo.toString());
 		int result =userService.login(vo);
-		
+			
 		if(result==1) {
+			session.setAttribute("userId", vo.getUserId());//세션에 저장
 			RA.addFlashAttribute("msg","로그인성공");
+			return "redirect:/";//홈 
 			
 		}else {
 			RA.addFlashAttribute("msg","로그인실패");
+			return "redirect:/user/userLogin";
 		}
 	
-		return "user/userMypage";
 	}
 
-	@RequestMapping("/userMypage")
-	public String userMypage() {
-		return "user/userMypage";
+	 @RequestMapping("/userMypage")
+	   public String userMypage(HttpSession session, Model model) {
+	      
+	      String userId = (String)session.getAttribute("userId");
+	      //마이페이지 진입 시 조인처리
+	      
+	      UserVO userVO = userService.userInfo(userId);
+	      System.out.println(userVO.toString());
+	      
+	      model.addAttribute("userVO", userVO);
+	      
+	      return "user/userMypage";
+	   }
+	
+	@RequestMapping("/userLogout")
+	public String userLogout(HttpSession session) {
+		session.invalidate();//세션정보 삭제
 		
+		return "redirect:/";
 	}
 
 }
