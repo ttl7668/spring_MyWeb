@@ -60,5 +60,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			on u.userid = f.writer
 			where userid = #{userId}
 	</select>
+	
+	<select id="getInfo" resultType="UserVO">
+		select*from users where userId=#{userId}	
+	</select>
 
+	<update id="update">
+		update users set userName=#{userName},userPw=#{userPw},userEmail1=#{userEmail1},userEmail2=#{userEmail2},userPhone2=#{userPhone2},addrZipNum=#{addrZipNum},addrBasic=#{addrBasic},addrDetail=#{addrDetail}
+		where userId=#{userId}
+	</update>
+	
 </mapper>

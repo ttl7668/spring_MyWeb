@@ -63,10 +63,9 @@ public class UserController {
 	public String loginForm(UserVO vo,HttpSession session,RedirectAttributes RA) {
 		System.out.println(vo.toString());
 		int result =userService.login(vo);
-			
+		System.out.println(result);
 		if(result==1) {
 			session.setAttribute("userId", vo.getUserId());//세션에 저장
-			RA.addFlashAttribute("msg","로그인성공");
 			return "redirect:/";//홈 
 			
 		}else {
@@ -75,20 +74,39 @@ public class UserController {
 		}
 	
 	}
-
+	/*//내글 보기 
+	 * @RequestMapping("/userMypage") public String userMypage(HttpSession session,
+	 * Model model) {
+	 * 
+	 * String userId = (String)session.getAttribute("userId"); //마이페이지 진입 시 조인처리
+	 * 
+	 * UserVO userVO = userService.userInfo(userId);
+	 * System.out.println(userVO.getUserPw());
+	 * 
+	 * model.addAttribute("userVO", userVO);
+	 * 
+	 * return "user/userMypage"; }
+	 */
+	 
+	 //수정화면
 	 @RequestMapping("/userMypage")
-	   public String userMypage(HttpSession session, Model model) {
-	      
+	 public String userMypage(HttpSession session, Model model) {
 	      String userId = (String)session.getAttribute("userId");
-	      //마이페이지 진입 시 조인처리
-	      
-	      UserVO userVO = userService.userInfo(userId);
-	      System.out.println(userVO.toString());
+
+	      UserVO userVO = userService.getInfo(userId);
+	      //System.out.println(userVO.getUserPw());
 	      
 	      model.addAttribute("userVO", userVO);
 	      
 	      return "user/userMypage";
-	   }
+	 }
+	 //수정폼
+	 @RequestMapping(value="/updateForm",method=RequestMethod.POST)
+	 public String updateForm(UserVO vo,RedirectAttributes RA) {
+		 System.out.println(vo.toString());
+			userService.update(vo);
+			return "redirect:/";
+	 }
 	
 	@RequestMapping("/userLogout")
 	public String userLogout(HttpSession session) {

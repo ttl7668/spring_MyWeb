@@ -41,7 +41,7 @@
                         <div id="info" class="tab-pane fade in active">
  
                             <p>*표시는 필수 입력 표시입니다</p>
-                            <form>
+                        <form action="updateForm" name="updateForm" method="post">
                             <table class="table">
                                 <tbody class="m-control">
                                     <tr>
@@ -54,11 +54,11 @@
                                     </tr>
                                     <tr>
                                         <td class="m-title">*비밀번호</td>
-                                        <td><input class="form-control input-sm"></td>
+                                        <td><input class="form-control input-sm" name="userPw"></td>
                                     </tr>
                                     <tr>
                                         <td class="m-title">*비밀번호확인</td>
-                                        <td><input class="form-control input-sm"></td>
+                                        <td><input class="form-control input-sm" name="pwConfirm"></td>
                                     </tr>
                                     <tr>
                                         <td class="m-title">*E-mail</td>
@@ -99,11 +99,11 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            </form>
+                         </form>
 
                             <div class="titlefoot">
-                                <button class="btn">수정</button>
-                                <button class="btn">목록</button>
+                                <button type="button" class="btn" id="updateBtn">수정</button>
+                                <button type="button" class="btn">목록</button>
                             </div>
                         </div>
                         <!-- 첫번째 토글 끝 -->
@@ -148,6 +148,12 @@
     </section>
     
     <%@ include file="../include/footer.jsp" %>
-    
+    <script>
+    $("#updateBtn").click(function(){
+		alert("수정완료")
+		document.updateForm.submit();
+		
+    });
+    </script>
 </body>
 </html>

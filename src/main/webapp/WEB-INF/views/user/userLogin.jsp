@@ -49,7 +49,7 @@
 	<script>
 	
 	$("#loginBtn").click(function(){
-		
+		var msg = '${msg}';
 		 if($("#userId").val() == ''){
 				alert("아이디입력하시오 ");
 				$("#userId").focus();
@@ -59,8 +59,8 @@
 					$("#userPw").focus();
 				return;
 			 }else{
-				 document.loginForm.submit();
 				 alert(msg)
+				 document.loginForm.submit();
 			 }
 	})
  	
